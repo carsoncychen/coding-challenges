@@ -50,4 +50,12 @@ function solution(A, K) {
 
 // ===========================
 
-//
+// OddOccurrencesInArray
+
+function solution(A) {
+    let result = 0;
+    for (let i = 0; i < A.length; i ++) {
+        result ^= A[i];
+    }
+    return result;
+}
