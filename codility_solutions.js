@@ -82,4 +82,5 @@ printTriangle = () => {
 
 const tester = printTriangle();
 tester(10);
+console.dir(tester);
 
