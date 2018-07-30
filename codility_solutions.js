@@ -84,3 +84,24 @@ const tester = printTriangle();
 tester(10);
 console.dir(tester);
 
+
+// ===============================
+
+// find missing num
+
+function solution(A) {
+    const arr = A;
+    let expectSum = 0;
+    let realSum = 0;
+
+    for (let i = 0; i <= arr.length; i++) {
+        expectSum += i + 1;
+        if (arr[i] !== undefined) {
+            realSum += arr[i];
+        }
+    }
+
+    return expectSum - realSum;
+};
+
+solution([7,4,6,3,2,1]);
