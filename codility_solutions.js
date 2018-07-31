@@ -106,3 +106,25 @@ function solution(A) {
 
     return lowest;
 }
+
+// ===================================
+
+// permutation
+
+function solution(A) {
+    const mySet = new Set();
+    const arr = A;
+    const len = A.length;
+
+    for (let i = 0; i < len; i++) {
+        mySet.add(arr[i]);
+    }
+
+    for (let i = 0; i < len; i++) {
+        if (!mySet.has(i+1)) {
+            return 0
+        }
+    }
+
+    return 1;
+}
