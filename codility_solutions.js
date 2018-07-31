@@ -62,31 +62,6 @@ function solution(A) {
 
 // ============================
 
-// practice closure and recursion
-
-printTriangle = () => {
-  let count = 1; // variable stored in closure
-  printNum = (num) => {
-    if (count <= num) {
-      let printHolder = '';
-      for(let i = 0; i < count; i++) {
-        printHolder += '#';
-      }
-      console.log(printHolder);
-      count ++;
-      printNum(num);
-    }
-  }
-  return printNum;
-}
-
-const tester = printTriangle();
-tester(10);
-console.dir(tester);
-
-
-// ===============================
-
 // find missing num
 
 function solution(A) {
@@ -104,4 +79,30 @@ function solution(A) {
     return expectSum - realSum;
 };
 
-solution([7,4,6,3,2,1]);
+// ================================
+
+// find diff in tape
+
+function solution(A) {
+    const arr = A;
+    const len = arr.length;
+    let sum = 0;
+
+    for (let i = 0; i < len; i++) {
+        sum += arr[i];
+    }
+
+    let curLeft = 0;
+    let curRight = 0;
+    let lowest;
+    for (let i = 0; i < len; i++) {
+        curLeft += arr[i];
+        curRight = sum - curLeft;
+        const diff = Math.abs(curLeft - curRight);
+        if (diff < lowest || lowest === undefined) {
+            lowest = diff;
+        }
+    }
+
+    return lowest;
+}
