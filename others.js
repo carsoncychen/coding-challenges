@@ -154,3 +154,52 @@ function findPic(nestedArr) {
 }
 
 console.log(findPic(image3));
+
+// ===========================
+
+// cons_values = [2, 4, 5, 7, 9] rates of consumption in tonnes per hour
+// timestamps =  [0, 2, 3, 6, 9] hours since epoch
+// total_cons(cons_values, timestamps, start, end)
+// 2 * 2 + 1 * 4 + 3 * 5 + 3 * 7 = 44 tons
+total_cons(consValues, timeStamps, 2, 7);
+function total_cons(consValues, timeStamps, start, end) {
+  let totalConsumption = 0;
+  let startIndex = 0;
+  let endIndex = 0;
+  if (timeStamps[timeStamps.length - 1] < end) {
+    timeStamps.push(end);
+  }
+  for (let i = 0; i < timeStamps.length; i++) {
+    if (timeStamps[i] === start) startIndex = i;
+
+    if (timeStamps[i] <== end) endIndex = i;
+  }
+
+  for (let j = startIndex; j < endIndex; j++) {
+    if (j < endIndex - 1) totalConsumption += consValues[j] * (timeStamps[j + 1] - timeStamps[j]);
+    else totalConsumption += consValues[j] * (end - timeStamps[j]);
+  }
+
+  return totalConsumption;
+}
+
+// ====================
+function printN() {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      console.log('Value: ' + i)
+    }, 1000);
+  }
+}
+
+// VS
+
+function printN() {
+  for (var i = 0; i < 5; i++) {
+    setTimeout(() => {
+      console.log('Value: ' + i)
+    }, 1000);
+  }
+}
+
+// =====================
