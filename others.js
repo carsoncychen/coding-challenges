@@ -185,7 +185,7 @@ function total_cons(consValues, timeStamps, start, end) {
 
 // ====================
 function printN() {
-  for (let i = 0; i < 5; i++) {
+  for (var i = 0; i < 5; i++) {
     setTimeout(() => {
       console.log('Value: ' + i)
     }, 1000);
@@ -195,7 +195,7 @@ function printN() {
 // VS
 
 function printN() {
-  for (var i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     setTimeout(() => {
       console.log('Value: ' + i)
     }, 1000);
@@ -203,3 +203,45 @@ function printN() {
 }
 
 // =====================
+
+/*
+Given input of number, return all the possible combination of the (),
+
+Example: 2, ()(), or (())
+Example: 3, ()()(), ()(()), (())(), ((()))
+
+*/
+
+const findParen = (n) => {
+  const result = [];
+
+  const recurse = (value, accumulator, openCount, closeCount, level) => {
+
+    // stop routes that have more closing parentheses
+    if (openCount < closeCount) {
+      return;
+    }
+
+    // return accumulator on routes that reached to last level
+    if (level <= 0) {
+      return result.push(accumulator);
+    }
+
+    // on routes that already have n opening paren, stop all open paren routes
+    if (openCount >= n) {
+      return recurse(')', accumulator + ')', openCount, closeCount + 1, level - 1);
+    }
+
+
+    recurse('(', accumulator + '(', openCount + 1, closeCount, level - 1);
+    recurse(')', accumulator + ')', openCount, closeCount + 1, level - 1);
+  }
+
+  // invoke recursion with initial arguments
+  recurse('(', '', 0, 0, n * 2);
+
+  // return accumulated results
+  return result;
+}
+
+findParen(4);
