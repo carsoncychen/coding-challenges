@@ -245,3 +245,203 @@ const findParen = (n) => {
 }
 
 findParen(4);
+
+// ================
+/*You are in charge of a display advertising program. Your ads are displayed on websites all over the internet. You have some CSV input data that counts how many times that users have clicked on an ad on each individual domain. Every line consists of a click count and a domain name, like this:*/
+
+let counts = ["900,google.com",
+  "60,mail.yahoo.com",
+  "10,mobile.sports.yahoo.com",
+  "40,sports.yahoo.com",
+  "300,yahoo.com",
+  "10,stackoverflow.com",
+  "2,en.wikipedia.org",
+  "1,es.wikipedia.org",
+  "1,mobile.sports",
+  "1,google.co.uk"];
+
+/*
+['900', 'google.com']
+['900', ['google', 'com']]
+['410', ['yahoo', 'com']]
+
+{
+  'com': 1310,
+  'google.com': 900
+  yahoo.com: 410
+}
+
+*/
+/*
+Write a function that takes this input as a parameter and returns a data structure containing the number of clicks that were recorded on each domain AND each subdomain under it. For example, a click on "mail.yahoo.com" counts toward the totals for "mail.yahoo.com", "yahoo.com", and "com". (Subdomains are added to the left of their parent domain. So "mail" and "mail.yahoo" are not valid domains. Note that "mobile.sports" appears as a separate domain as the last item of the input.)
+
+Sample output (in any order/format):
+
+calculateClicksByDomain(counts)
+1320    com
+ 900    google.com
+ 410    yahoo.com
+  60    mail.yahoo.com
+  10    mobile.sports.yahoo.com
+  50    sports.yahoo.com
+  10    stackoverflow.com
+   3    org
+   3    wikipedia.org
+   2    en.wikipedia.org
+   1    es.wikipedia.org
+   1    mobile.sports
+   1    sports
+   1    uk
+   1    co.uk
+   1    google.co.uk
+*/
+
+function calculateClicksByDomain(counts) {
+  const result = {};
+
+  const splittedArr = [];
+
+  for (let el of counts) {
+    let newEl = el.split(',')
+    newEl[1] = newEl[1].split('.');
+    splittedArr.push(newEl)
+  }
+
+  for (let innerArr of splittedArr) {
+    const curEl = [];
+    for (let i = innerArr[1].length - 1; i >= 0; i--) {
+      curEl.unshift(innerArr[1][i]);
+      const newCurEl = curEl.join('.')
+      if (result[newCurEl]) {
+        result[newCurEl] += parseInt(innerArr[0]);
+      } else {
+        result[newCurEl] = parseInt(innerArr[0]);
+      }
+    }
+  }
+
+  return result
+
+}
+console.log(
+  calculateClicksByDomain(counts));
+
+// ===================
+
+/*
+We have some clickstream data that we gathered on our client's website. Using cookies, we collected snippets of users' anonymized URL histories while they browsed the site. The histories are in chronological order and no URL was visited more than once per person.
+
+Write a function that takes two users' browsing histories as input and returns the longest contiguous sequence of URLs that appears in both.*/
+
+
+var user0 = ["/start.html", "/pink.php", "/register.asp", "/orange.html", "/red.html"];
+var user1 = ["/start.html", "/green.html", "/blue.html", "/pink.php", "/register.asp", "/orange.html"];
+var user2 = ["/red.html", "/green.html", "/blue.html", "/pink.php", "/register.asp"];
+var user3 = ["/blue.html", "/logout.php"];
+
+
+/*
+Sample output:
+
+findContiguousHistory(user0, user1)
+   /pink.php
+   /register.asp
+   /orange.html
+
+findContiguousHistory(user1, user2)
+   /green.html
+   /blue.html
+   /pink.php
+   /register.asp
+
+findContiguousHistory(user0, user3)
+   (empty)
+
+findContiguousHistory(user2, user3)
+   /blue.html
+
+findContiguousHistory(user3, user3)
+   /blue.html
+   /logout.php
+*/
+
+function helper(arr1, arr2, pointer1Start, pointer2Start) {
+  let endPoint1 = pointer1Start;
+  let endPoint2 = pointer2Start;
+
+  while ()
+}
+
+function findContiguousHistory(arr1, arr2) {
+  let longestHistory = 0;
+  let pointer1Start;
+  let pointer2Start;
+  let pointer1End;
+  let pointer2End;
+
+  for (let i = 0; i < arr1.length; i++) {
+
+    const curEl = arr1[i];
+
+    const arr2Spot = arr2.indexOf(curEl);
+    if (arr2Spot) {
+      pointer1Start = i;
+      pointer2Start = arr2Spot;
+      helper(arr1, arr2, pointer1Start, pointer2Start)
+    }
+  }
+
+}
+
+// =======================
+
+// Recreate Document object from browser.
+
+class MyDocument {
+  constructor(tagName) {
+    this.tagName = tagName || 'html',
+      this.innerHTML = '',
+      this.children = []
+  }
+
+  createElement(tagName) {
+    return new MyDocument(tagName);
+  }
+
+  appendChild(element) {
+    this.children.push(element);
+  }
+
+  render() {
+    let openTags = '';
+    let closingTags = '';
+
+    function recursiveRendering(curDOM) {
+      let innerHTML = curDOM.innerHTML === '' ? '' : `${curDOM.innerHTML}\n`
+
+      openTags = openTags + `<${curDOM.tagName}>\n${innerHTML}`;
+      closingTags = `</${curDOM.tagName}>\n` + closingTags;
+      if (curDOM.children) {
+        curDOM.children.forEach((childDOM) => {
+          recursiveRendering(childDOM);
+        })
+      }
+    }
+    recursiveRendering(this);
+
+    return openTags + closingTags;
+  }
+
+}
+
+const myDoc = new MyDocument();
+const body = myDoc.createElement('body');
+const div = myDoc.createElement('div');
+div.innerHTML = 'Inside of a div!';
+myDoc.appendChild(body);
+body.appendChild(div);
+
+console.log(myDoc.render())
+
+
+// ===============
